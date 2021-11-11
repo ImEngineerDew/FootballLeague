@@ -11,9 +11,8 @@
 	<groupId>com.toadsdewin</groupId>
 	<artifactId>FootballLeague</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>FootballLeague</name>
-	<description>Este es el proyecto backend para los equipos de fútbol y su respectiva liga</description>
+	<description>Este es un proyecto con Spring y MongoDB para una liga local de fútbol</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -27,11 +26,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
