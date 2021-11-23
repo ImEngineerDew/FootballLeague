@@ -1,5 +1,28 @@
 package com.toadsdewin.FootballLeague.services;
+import com.toadsdewin.FootballLeague.models.TeamModel;
+import com.toadsdewin.FootballLeague.repositories.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Service
-public class TeamService {
+import java.util.List;
+import java.util.Optional;
+
+@Service //It defines a class like a service
+public class TeamService
+{
+    @Autowired
+    TeamRepository teamRepository;
+
+    //A method to save the teams data
+    public void saveTeam(TeamModel team)
+    {
+        this.teamRepository.save(team);
+    }
+    //A method for check the teams model
+    public List<TeamModel> getTeams()
+    {
+        return this.teamRepository.findAll();
+    }
+    //A method for check a team by ID
+
 }
