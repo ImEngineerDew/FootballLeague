@@ -24,5 +24,17 @@ public class TeamService
         return this.teamRepository.findAll();
     }
     //A method for check a team by ID
-
+    public Optional<TeamModel> findByID(String id)
+    {
+        return this.teamRepository.findById(id);
+    }
+    //A method for check if the team already exists!
+    public Boolean checkTeam(String id)
+    {
+        return this.teamRepository.existsById(id);
+    }
+    public void delTeam(String id)
+    {
+        this.teamRepository.deleteById(id);
+    }
 }
