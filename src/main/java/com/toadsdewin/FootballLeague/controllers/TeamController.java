@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,9 +26,22 @@ public class TeamController
     {
         this.teamService.saveTeam(team);
         Map<String,String> answer  = new HashMap<>();
-        answer.put("Message","The team has been introduce properly");
+        answer.put("Message","The team has been introduced properly");
+        answer.put("Status","true");
 
         return ResponseEntity.ok(answer);
+    }
+
+    @GetMapping("/teams")
+    public List<TeamModel> getTeam()
+    {
+        return this.teamService.getTeams();
+    }
+
+    @GetMapping("/teams/{id}")
+    public TeamModel getTeamById(@PathVariable String id)
+    {
+        return this.teamService.findByID(id).get();
     }
 
 }
