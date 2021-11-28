@@ -28,6 +28,15 @@ public class MatchController
         answer.put("Status","true");
         return ResponseEntity.ok(answer);
     }
+    @PutMapping("/matches")
+    public ResponseEntity<Map<String,String>> upgradeMatch(@Valid @RequestBody MatchModel match)
+    {
+        this.matchService.saveMatch(match);             /**This issue may update the matches data**/
+        Map<String,String> answer = new HashMap<>();
+        answer.put("Message","The match has been updated properly");
+        answer.put("Status","true");
+        return ResponseEntity.ok(answer);
+    }
 
     @GetMapping("/matches")
     public List<MatchModel> getMatch()
