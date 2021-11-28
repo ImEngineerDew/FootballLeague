@@ -3,13 +3,11 @@ import com.toadsdewin.FootballLeague.models.UserModel;
 import com.toadsdewin.FootballLeague.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -44,4 +42,17 @@ public class UserController
         }
         return ResponseEntity.ok(answer);
     }
+
+    @GetMapping("/users")
+    public List<UserModel> getUsers()
+    {
+        return this.userService.getUser();
+    }
+
+    @GetMapping("/users/{id}")
+    public UserModel getUserById(@PathVariable String id)
+    {
+        return this.userService.findById(id).get();
+    }
+
 }
