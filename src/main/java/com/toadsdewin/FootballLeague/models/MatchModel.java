@@ -7,9 +7,9 @@ public class MatchModel
 {
     @Id
     private String id;
-    private UserModel userModel;
-    private TeamModel local;
-    private TeamModel visitor;
+    private UserModel userModel;        //User information
+    private TeamModel local;            //This is the local team information
+    private TeamModel visitor;          //This is the visitor team information
     private String data;
     private int localScores;
     private int visitorScores;
