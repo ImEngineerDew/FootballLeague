@@ -2,7 +2,6 @@ package com.toadsdewin.FootballLeague.controllers;
 
 import com.toadsdewin.FootballLeague.models.MatchModel;
 import com.toadsdewin.FootballLeague.services.MatchService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +10,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -33,5 +33,11 @@ public class MatchController
     public List<MatchModel> getMatch()
     {
         return this.matchService.getMatches();
+    }
+
+    @GetMapping("/matches/{id}")
+    public MatchModel getMatchByID(@PathVariable String id)
+    {
+        return this.matchService.findByID(id).get();
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import com.toadsdewin.FootballLeague.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MatchService
@@ -19,5 +20,9 @@ public class MatchService
     public List<MatchModel> getMatches()
     {
         return this.matchRepository.findAll();
+    }
+    public Optional<MatchModel> findByID(String id)
+    {
+        return this.matchRepository.findById(id);
     }
 }
