@@ -19,6 +19,7 @@ public class MatchController
     @Autowired
     MatchService matchService;
 
+    @PostMapping ("/matches")
     public ResponseEntity<Map<String,String>> saveMatch(@Valid @RequestBody MatchModel match)
     {
         Map<String,String> answer = new HashMap<>();
