@@ -2,7 +2,7 @@ package com.toadsdewin.FootballLeague.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "match")
+@Document(collection = "matches")
 public class MatchModel
 {
     @Id

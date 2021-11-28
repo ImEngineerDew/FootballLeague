@@ -22,10 +22,10 @@ public class MatchController
     @PostMapping ("/matches")
     public ResponseEntity<Map<String,String>> saveMatch(@Valid @RequestBody MatchModel match)
     {
+        this.matchService.saveMatch(match);             /**This issue may create the table matches**/
         Map<String,String> answer = new HashMap<>();
-        answer.put("Message","The team has been introduced properly");
+        answer.put("Message","The match has been introduced properly");
         answer.put("Status","true");
-
         return ResponseEntity.ok(answer);
     }
 
