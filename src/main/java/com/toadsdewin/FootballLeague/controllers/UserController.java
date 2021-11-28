@@ -49,7 +49,7 @@ public class UserController
         return this.userService.getUser();
     }
 
-    /**This is the linecode that find the 
+    /**This is the linecode that find the users by id**/
     @GetMapping("/users/{id}")
     public UserModel getUserById(@PathVariable String id)
     {
