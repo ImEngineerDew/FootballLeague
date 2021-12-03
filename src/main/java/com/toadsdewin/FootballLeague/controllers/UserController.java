@@ -3,13 +3,17 @@ import com.toadsdewin.FootballLeague.models.MatchModel;
 import com.toadsdewin.FootballLeague.models.UserModel;
 import com.toadsdewin.FootballLeague.services.MatchService;
 import com.toadsdewin.FootballLeague.services.UserService;
+import com.toadsdewin.FootballLeague.utils.Autorization;
 import com.toadsdewin.FootballLeague.utils.BCrypt;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +87,20 @@ public class UserController
         }
         else
         {
+            String hash = "";
+            long time = System.currentTimeMillis();
+
+            if(auxiliarUser.getId()!=null)
+            {
+                hash = Jwts.builder()
+                        .signWith(SignatureAlgorithm.HS256, Autorization.KEY)
+                        .setSubject(auxiliarUser.getName())
+                        .setIssuedAt(new Date(time))
+                        .setExpiration(new Date(time+900000))
+                        .claim("username",auxiliarUser.getUsername())
+                        .claim("email",auxiliarUser.getEmail())
+                        .compact();
+            }
             answer.put("Message","Login sucesfull!");
         }
         return ResponseEntity.ok(answer);

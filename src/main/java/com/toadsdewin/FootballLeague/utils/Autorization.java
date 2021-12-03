@@ -17,7 +17,7 @@ public class Autorization implements Filter
         //This variable represents us the main path http//localhost:8080/
 
         String url = httpServletRequest.getRequestURI();
-        if(url.contains("/api/users") || url.contains("/api/users/login") || url.contains("index"))
+        if(url.contains("/api/matches") || url.contains("/api/users/login") || url.contains("index"))
         {
             chain.doFilter(request,response);
         }
