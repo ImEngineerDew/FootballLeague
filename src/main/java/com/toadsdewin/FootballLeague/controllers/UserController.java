@@ -1,9 +1,13 @@
 package com.toadsdewin.FootballLeague.controllers;
+import com.toadsdewin.FootballLeague.models.MatchModel;
 import com.toadsdewin.FootballLeague.models.UserModel;
+import com.toadsdewin.FootballLeague.services.MatchService;
 import com.toadsdewin.FootballLeague.services.UserService;
+import com.toadsdewin.FootballLeague.utils.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -16,6 +20,9 @@ public class UserController
 {
     @Autowired
     UserService userService;
+
+    @Autowired
+    MatchService matchService;
     /**
      * We define the HTTP method which is going to be
      * executed the method
@@ -25,10 +32,11 @@ public class UserController
     @PostMapping("/users")
     public ResponseEntity<Map<String,String>>saveUsers(@Valid @RequestBody UserModel user)
     {
-
         Map<String,String> answer  = new HashMap<>();
 
         /**Okay, this is the line that validate if we've had created an user**/
+        user.setPassword(BCrypt.hashpw(user.getPassword(),BCrypt.gensalt()));        
+        
         UserModel us = this.userService.findByUserName(user.getUsername());
 
         if(us.getId()== null)
@@ -41,6 +49,53 @@ public class UserController
             answer.put("Message","The user already exist");
         }
         return ResponseEntity.ok(answer);
+    }
+
+    /**For update an user**/
+    @PutMapping("/users")
+    public ResponseEntity<Map<String,String>> upgradeUsers(@Valid @RequestBody UserModel user)
+    {
+            this.userService.save(user);
+            Map<String, String> answer = new HashMap<>();
+            answer.put("Message", "The user has been upgraded properly");
+
+            MatchModel  auxiliarMatch = this.matchService.findMatch("61a23a41c1d97e39da71ad17");
+            auxiliarMatch.getUserModel().setName(user.getName());
+            upgradeMatch(auxiliarMatch);
+
+        return ResponseEntity.ok(answer);
+    }
+    
+    @PostMapping("/users/login")
+    public ResponseEntity <Map<String,String>> login (@RequestBody UserModel user)
+    {
+        UserModel auxiliarUser  = this.userService.findByUserName(user.getUsername());
+        Map<String,String> answer = new HashMap<>();
+
+        if(auxiliarUser.getUsername()==null)
+        {
+            answer.put("Message","The user or password is incorrect!");
+        }
+
+        if(!BCrypt.checkpw(user.getPassword(),auxiliarUser.getPassword()))
+        {
+            answer.put("Message","The user or password is incorrect");
+        }
+        else
+        {
+            answer.put("Message","Login sucesfull!");
+        }
+        return ResponseEntity.ok(answer);
+
+
+    }
+    
+    public void upgradeMatch(MatchModel match)
+    {
+        this.matchService.saveMatch(match);             /**This issue may update the matches data**/
+        Map<String,String> answer = new HashMap<>();
+        answer.put("Message","The match has been updated properly");
+        answer.put("Status","true");
     }
 
     @GetMapping("/users")

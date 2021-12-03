@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -30,7 +31,7 @@ public class MatchController
     @PutMapping("/matches")
     public ResponseEntity<Map<String,String>> upgradeMatch(@Valid @RequestBody MatchModel match)
     {
-        this.matchService.saveMatch(match);             /**This issue may update the matches data**/
+        this.matchService.saveMatch(match);             /**This issue may create the table matches**/
         Map<String,String> answer = new HashMap<>();
         answer.put("Message","The match has been updated properly");
         answer.put("Status","true");
