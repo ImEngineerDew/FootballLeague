@@ -101,7 +101,9 @@ public class UserController
                         .claim("email",auxiliarUser.getEmail())
                         .compact();
             }
+            auxiliarUser.setHash(hash);
             answer.put("Message","Login sucesfull!");
+            answer.put("Token",hash);
         }
         return ResponseEntity.ok(answer);
 
