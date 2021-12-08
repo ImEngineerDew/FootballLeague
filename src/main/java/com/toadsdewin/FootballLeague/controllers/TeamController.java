@@ -44,7 +44,7 @@ public class TeamController
         return this.teamService.findByID(id).get();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/teans/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/teams/{id}")
     public String deleteTeamsByID(String id)
     {
         teamService.delTeam(id);
