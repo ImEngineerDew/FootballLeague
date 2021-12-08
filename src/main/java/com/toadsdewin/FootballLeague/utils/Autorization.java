@@ -13,45 +13,33 @@ import java.io.IOException;
 public class Autorization implements Filter
 {
     public static final String KEY = "trolololo";
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-
-        //Obtain the main PATH
-        HttpServletRequest httpServletRequest=(HttpServletRequest) request;
-
-        HttpServletResponse httpServletResponse=(HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        //This variable represents us the main path http//localhost:8080/
-
-        String url = httpServletRequest.getRequestURI();
-        if(url.contains("/api/matches") || url.contains("/api/users/login") || url.contains("index"))
+    throws IOException, ServletException
         {
-            chain.doFilter(request,response);
-        }
-        else
-        {
-            String hash = httpServletRequest.getHeader("Authorization");
-            if(hash == null || hash.trim().equals(""))
+            //Hey, let's get the main path
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+
+            //http://localhost:8080/
+            String url =httpServletRequest.getRequestURI();
+
+            //Let's show if the following directions is going to be public
+            if(url.contains ("/api/matches") || url.contains("/api/users") || url.contains("/api/users/login") || url.contains("index"))
             {
-                response.setContentType("application/json");
-                String body = "{\"authorization\":\"NO\"}";
-                response.getWriter().write(body);
+                chain.doFilter(request,response);
             }
-            try
+            else
             {
-                Jws<Claims> claim = Jwts.parser().setSigningKey(KEY).parseClaimsJws(hash);
-                if(url.contains("/api/teams")|| url.contains("/api/matches")&& (!claim.getBody().get("username").equals("")))
+                try
                 {
-                    chain.doFilter(request,response);
+
+                }catch (Exception e)
+                {
+                    
                 }
-            }catch(Exception e)
-            {
-                response.setContentType("application/json");
-                String body="{\"autorizacion\":\"TOKEN NO VALIDO\"}";
-                response.getWriter().write(body);
             }
         }
     }
-}
+
+

@@ -106,8 +106,6 @@ public class UserController
             answer.put("Token",hash);
         }
         return ResponseEntity.ok(answer);
-
-
     }
     
     public void upgradeMatch(MatchModel match)
