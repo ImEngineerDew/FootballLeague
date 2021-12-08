@@ -131,4 +131,10 @@ public class UserController
         return this.userService.findById(id).get();
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
+    public void deleteUser(@PathVariable String id)
+    {
+        userService.deleteUserbyId(id);
+    }
+
 }

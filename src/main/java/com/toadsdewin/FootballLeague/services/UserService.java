@@ -7,29 +7,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService
-{
+public class UserService {
     @Autowired
     UserRepository userRepository;
 
     //A method for save the user data;
-    public void save(UserModel user)
-    {
+    public void save(UserModel user) {
         this.userRepository.save(user);
     }
 
-    public List<UserModel> getUser()
-    {
+    public List<UserModel> getUser() {
         return this.userRepository.findAll();
     }
 
-    public Optional<UserModel> findById(String id)
-    {
+    public Optional<UserModel> findById(String id) {
         return this.userRepository.findById(id);
     }
 
-    public UserModel findByUserName(String username)
-    {
+    public UserModel findByUserName(String username) {
         return this.userRepository.findByUsername(username).orElse(new UserModel());
     }
+
+    public void deleteUserbyId(String id)
+    {
+        userRepository.deleteById(id);
+    }
+
 }

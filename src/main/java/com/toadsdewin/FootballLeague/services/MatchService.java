@@ -30,4 +30,9 @@ public class MatchService
     {
         return this.matchRepository.findById(id);
     }
+    public void deleteMatchByID(String id)
+    {
+        matchRepository.deleteById(id);
+    }
+
 }

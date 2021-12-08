@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -13,10 +14,15 @@ public class Autorization implements Filter
 {
     public static final String KEY = "trolololo";
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
         //Obtain the main PATH
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletRequest httpServletRequest=(HttpServletRequest) request;
+
+        HttpServletResponse httpServletResponse=(HttpServletResponse) response;
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
         //This variable represents us the main path http//localhost:8080/
 
         String url = httpServletRequest.getRequestURI();
@@ -30,7 +36,7 @@ public class Autorization implements Filter
             if(hash == null || hash.trim().equals(""))
             {
                 response.setContentType("application/json");
-                String body = "{\"autorization\":\"NO\"}";
+                String body = "{\"authorization\":\"NO\"}";
                 response.getWriter().write(body);
             }
             try
@@ -42,7 +48,9 @@ public class Autorization implements Filter
                 }
             }catch(Exception e)
             {
-                //TODO Handle exception
+                response.setContentType("application/json");
+                String body="{\"autorizacion\":\"TOKEN NO VALIDO\"}";
+                response.getWriter().write(body);
             }
         }
     }
