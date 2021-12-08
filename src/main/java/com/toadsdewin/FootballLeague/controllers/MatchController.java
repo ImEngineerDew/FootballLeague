@@ -46,8 +46,9 @@ public class MatchController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/matches/{id}")
-    public void deleteMatch(@PathVariable String id)
+    public String deleteMatch(@PathVariable String id)
     {
         matchService.deleteMatchByID(id);
+        return "Match deleted by id";
     }
 }
