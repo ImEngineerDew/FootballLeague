@@ -42,10 +42,16 @@ public class Autorization implements Filter
                 }
                 try
                 {
-
+                    //Private routes (only by Token)
+                    Jws<Claims> claims=Jwts.parser().setSigningKey(KEY).parseClaimsJws(hash);
+                    if((url.contains("/api/check")||url.contains("/api/teams")||url.contains("/api/matches"))&&(!claims.getBody().get("username").equals(""))){
+                        chain.doFilter(request, response);
+                    }
                 }catch (Exception e)
                 {
-
+                    response.setContentType("application/json");
+                    String body="{\"authorization\":\"INVALID TOKEN\"}";
+                    response.getWriter().write(body);
                 }
             }
         }
