@@ -25,18 +25,27 @@ public class Autorization implements Filter
             String url =httpServletRequest.getRequestURI();
 
             //Let's show if the following directions is going to be public
-            if(url.contains ("/api/matches") || url.contains("/api/users") || url.contains("/api/users/login") || url.contains("index"))
+            if(url.contains ("/api/matches") || url.contains("/api/users") || url.contains("/api/users/login")
+               || url.contains("/api/teams") || url.contains ("index"))
             {
                 chain.doFilter(request,response);
             }
             else
             {
+                String hash = httpServletRequest.getHeader("Authorization");
+                if(hash==null || hash.trim().equals("  "))
+                {
+                    response.setContentType("application/json");
+                    String body = "{\"authorization\":\"NO\"}";
+                    response.getWriter().write(body);
+
+                }
                 try
                 {
 
                 }catch (Exception e)
                 {
-                    
+
                 }
             }
         }
