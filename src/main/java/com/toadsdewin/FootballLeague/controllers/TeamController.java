@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin (origins = "http://localhost:4200/")  //Allows the connection with frontend
 @RequestMapping("/api")
 public class TeamController
 {
